@@ -295,7 +295,7 @@
                                 <xsl:value-of select="$name"/>
                             </rdfs:label>
                             <rdfs:value>
-                                <xsl:value-of select="substring($name,7,2)"/>uu
+                                <xsl:value-of select="substring($name,7,4)"/>,<xsl:value-of select="substring($name,12,4)"/>
                             </rdfs:value>
                         </collex:date>
                     </dc:date>
@@ -336,7 +336,7 @@
                             <rdfs:label>
                                 <xsl:value-of select="$name"/>
                             </rdfs:label>
-                            <rdfs:value>18uu</rdfs:value>
+                            <rdfs:value>1850,1899</rdfs:value>
                         </collex:date>
                     </dc:date>
                     <dc:date>Uncertain</dc:date>
