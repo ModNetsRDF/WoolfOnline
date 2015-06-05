@@ -1,1 +1,9 @@
-This repo is primarily for ingestion of Woolf Online RDF into ModNets. It was cloned from Caitlyn Pollock's ModNets repo, which is no longer active. Email: pm@modnets.org
+This repo is primarily for ingestion of Woolf Online RDF into ModNets. 
+It was cloned from Caitlyn Pollock's ModNets repo, which is no longer active. 
+
+vw.xml is Woolf Online RDF for ModNets
+wo2rdf.xsl is Caitlyn's latest version XSLT
+wometadata 
+WOpRDF.xsl is S Obrien's initial version of XSLT
+
+Email: pm@modnets.org
