@@ -1,9 +1,13 @@
 This repo is primarily for ingestion of Woolf Online RDF into ModNets. 
 It was cloned from Caitlyn Pollock's ModNets repo, which is no longer active. 
 
-vw.xml is Woolf Online RDF for ModNets
+Files: 
+
+vw.xml is the current (as of 5 June 2015) WO RDF file indexed on edge.modnets.org
+
+vw.caitlyn.xml is Caitlyn's last RDF file 
 wo2rdf.xsl is Caitlyn's latest version XSLT
-wometadata 
-WOpRDF.xsl is S Obrien's initial version of XSLT
+wometadata is Caitlyn's latest version metadata file
+WOpRDF.xsl is Sean Obrien's previous version of WO XSLT
 
 Email: pm@modnets.org
