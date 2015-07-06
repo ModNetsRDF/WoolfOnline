@@ -37,7 +37,7 @@
 
     <!-- Woolf Online Collection Objects 
         
-        Eventually we should either generate these with the rest of the metadata, or pull these from a separate XML document or other resource.
+        Eventually we should either generate these with the rest of the metadata, or pull these from a separate XML document or other separately maintained resource.
 -->
 
     <xsl:variable name="Berg_Materials"
@@ -85,6 +85,7 @@
                     rdf:resource="http://woolfonline.com/?node=content/image/gallery&amp;project=1&amp;parent=6&amp;taxa=16"/>
                 <dc:title>Berg Materials: Notes For Writing &amp; Notebooks I-III</dc:title>
                 <dc:type>Manuscript</dc:type>
+                <dc:type>Collection</dc:type>
                 <dc:date>1925</dc:date>
                 <dc:subject>fiction</dc:subject>
                 <role:AUT>Virginia Woolf</role:AUT>
@@ -105,6 +106,7 @@
                     rdf:resource="http://woolfonline.com/?node=content/image/gallery&amp;project=1&amp;parent=2&amp;taxa=17"/>
                 <dc:title>Typescript of 'Time Passes' by Virginia Woolf</dc:title>
                 <dc:type>Typescript</dc:type>
+                <dc:type>Collection</dc:type>
                 <dc:date>1926</dc:date>
                 <dc:subject>fiction</dc:subject>
                 <role:AUT>Virginia Woolf</role:AUT>
@@ -125,6 +127,7 @@
                     rdf:resource="http://woolfonline.com/?node=content/image/gallery&amp;project=1&amp;parent=60&amp;taxa=25"/>
                 <dc:title>Commerce: Le Temps Passe</dc:title>
                 <dc:type>Periodical</dc:type>
+                <dc:type>Collection</dc:type>
                 <dc:date>1926</dc:date>
                 <dc:subject>fiction</dc:subject>
                 <role:AUT>Virginia Woolf</role:AUT>
@@ -144,6 +147,7 @@
                     rdf:resource="http://woolfonline.com/?node=content/image/gallery&amp;project=1&amp;parent=2&amp;taxa=18"/>
                 <dc:title>To The Lighthouse: Proofs, Complete Set</dc:title>
                 <dc:type>Typescript</dc:type>
+                <dc:type>Collection</dc:type>
                 <dc:date>1927</dc:date>
                 <dc:subject>fiction</dc:subject>
                 <role:AUT>Virginia Woolf</role:AUT>
@@ -163,6 +167,7 @@
                     rdf:resource="http://woolfonline.com/?node=content/image/gallery&amp;project=1&amp;parent=18&amp;taxa=27"/>
                 <dc:title>To The Lighthouse: Proofs, Second Copy Gatherings S-U</dc:title>
                 <dc:type>Codex</dc:type>
+                <dc:type>Collection</dc:type>
                 <dc:date>1927</dc:date>
                 <dc:subject>fiction</dc:subject>
                 <role:AUT>Virginia Woolf</role:AUT>
@@ -178,9 +183,11 @@
                 <collex:genre>Fiction</collex:genre>
                 <collex:source_html
                     rdf:resource="http://woolfonline.com/?node=content&amp;project=1&amp;taxa=19"/>
-                <rdfs:seeAlso rdf:resource="http://woolfonline.com/?node=content&amp;project=1&amp;taxa=19"/>
+                <rdfs:seeAlso
+                    rdf:resource="http://woolfonline.com/?node=content&amp;project=1&amp;taxa=19"/>
                 <dc:title>To The Lighthouse, USA 1st Edition</dc:title>
                 <dc:type>Codex</dc:type>
+                <dc:type>Collection</dc:type>
                 <dc:date>1927</dc:date>
                 <dc:subject>fiction</dc:subject>
                 <role:AUT>Virginia Woolf</role:AUT>
@@ -196,9 +203,11 @@
                 <collex:genre>Fiction</collex:genre>
                 <collex:source_html
                     rdf:resource="http://woolfonline.com/?node=content&amp;project=1&amp;taxa=20"/>
-                <rdfs:seeAlso rdf:resource="http://woolfonline.com/?node=content&amp;project=1&amp;taxa=20"/>
+                <rdfs:seeAlso
+                    rdf:resource="http://woolfonline.com/?node=content&amp;project=1&amp;taxa=20"/>
                 <dc:title>To The Lighthouse, GB 1st Edition</dc:title>
                 <dc:type>Codex</dc:type>
+                <dc:type>Collection</dc:type>
                 <dc:date>1927</dc:date>
                 <dc:subject>fiction</dc:subject>
                 <role:AUT>Virginia Woolf</role:AUT>
@@ -214,9 +223,11 @@
                 <collex:genre>Fiction</collex:genre>
                 <collex:source_html
                     rdf:resource="http://woolfonline.com/?node=content&amp;project=1&amp;taxa=21"/>
-                <rdfs:seeAlso rdf:resource="http://woolfonline.com/?node=content&amp;project=1&amp;taxa=21"/>
+                <rdfs:seeAlso
+                    rdf:resource="http://woolfonline.com/?node=content&amp;project=1&amp;taxa=21"/>
                 <dc:title>To The Lighthouse, Uniform Edition</dc:title>
                 <dc:type>Codex</dc:type>
+                <dc:type>Collection</dc:type>
                 <dc:date>1932</dc:date>
                 <dc:subject>fiction</dc:subject>
                 <role:AUT>Virginia Woolf</role:AUT>
@@ -232,9 +243,11 @@
                 <collex:genre>Fiction</collex:genre>
                 <collex:source_html
                     rdf:resource="http://woolfonline.com/?node=content&amp;project=1&amp;taxa=22"/>
-                <rdfs:seeAlso rdf:resource="http://woolfonline.com/?node=content&amp;project=1&amp;taxa=22"/>
+                <rdfs:seeAlso
+                    rdf:resource="http://woolfonline.com/?node=content&amp;project=1&amp;taxa=22"/>
                 <dc:title>To The Lighthouse, Everyman Edition</dc:title>
                 <dc:type>Codex</dc:type>
+                <dc:type>Collection</dc:type>
                 <dc:date>1952</dc:date>
                 <dc:subject>fiction</dc:subject>
                 <role:AUT>Virginia Woolf</role:AUT>
@@ -250,9 +263,11 @@
                 <collex:genre>Fiction</collex:genre>
                 <collex:source_html
                     rdf:resource="http://woolfonline.com/?node=content&amp;project=1&amp;taxa=23"/>
-                <rdfs:seeAlso rdf:resource="http://woolfonline.com/?node=content&amp;project=1&amp;taxa=23"/>
+                <rdfs:seeAlso
+                    rdf:resource="http://woolfonline.com/?node=content&amp;project=1&amp;taxa=23"/>
                 <dc:title>To The Lighthouse, Albatross Edition</dc:title>
                 <dc:type>Codex</dc:type>
+                <dc:type>Collection</dc:type>
                 <dc:date>1932</dc:date>
                 <dc:subject>fiction</dc:subject>
                 <role:AUT>Virginia Woolf</role:AUT>
@@ -272,6 +287,7 @@
                     rdf:resource="http://woolfonline.com/?node=content/image/gallery&amp;project=1&amp;parent=2&amp;taxa=57"/>
                 <dc:title>To The Lighthouse: A Sketch of the Past</dc:title>
                 <dc:type>Manuscript</dc:type>
+                <dc:type>Collection</dc:type>
                 <dc:date>1939</dc:date>
                 <dc:subject>fiction</dc:subject>
                 <role:AUT>Virginia Woolf</role:AUT>
@@ -700,10 +716,7 @@
                         </xsl:choose>
                     </xsl:if>
 
-                    <!-- rdfs:seeAlso is REQUIRED -->
 
-                    <xsl:variable name="url" select="column[@name = 'url']"/>
-                    <rdfs:seeAlso rdf:resource="{$url}"/>
 
                     <!-- role:OWN set by meta_rights_holder -->
 
@@ -809,7 +822,7 @@
                                     </rdfs:value>
                                 </collex:date>
                             </dc:date>
-                            <dc:date>Uncertain</dc:date>
+
                         </xsl:when>
                         <!-- decade approximations like "circa 1890s" -->
                         <xsl:when test="string-length($meta_date) = 11">
@@ -887,6 +900,47 @@
                     <xsl:if test="string-length($meta_date) = 0">
                         <dc:date>Uncertain</dc:date>
                     </xsl:if>
+
+                    <xsl:variable name="taxa_subset" select="column[@name = 'taxa_subset']"/>
+                    <xsl:if
+                        test="$taxa_subset != '' and $taxa_subset/contains($taxa_subset, 'transcriptions')">
+                        <collex:fulltext>true</collex:fulltext>
+                    </xsl:if>
+
+
+                    <!-- rdfs:seeAlso is REQUIRED -->
+
+                    <!-- Choose transcription URL wherever available. -->
+
+                    <xsl:variable name="url" select="column[@name = 'url']"/>
+                    <rdfs:seeAlso>
+                        <xsl:choose>
+                            <xsl:when test="contains($url, ',')">
+                                <xsl:variable name="first" select="substring-before($url, ',')"/>
+                                <xsl:if test="contains($first, 'text/transcriptions')">
+                                    <xsl:attribute name="rdf:resource">
+                                        <xsl:value-of select="$first"/>
+                                    </xsl:attribute>
+                                </xsl:if>
+                                <xsl:variable name="second" select="substring-after($url, ',')"/>
+                                <xsl:if test="contains($second, 'text/transcriptions')">
+                                    <xsl:attribute name="rdf:resource">
+                                        <xsl:value-of select="$second"/>
+                                    </xsl:attribute>
+                                </xsl:if>
+                                <xsl:if test="not(contains($first, 'text/transcriptions')) and not(contains($second, 'text/transcriptions'))">
+                                    <xsl:attribute name="rdf:resource">
+                                        <xsl:value-of select="$first"/>
+                                    </xsl:attribute>
+                                </xsl:if>                           
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="rdf:resource">
+                                    <xsl:value-of select="$url"/>
+                                </xsl:attribute>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </rdfs:seeAlso>
                 </wo:Description>
             </xsl:when>
         </xsl:choose>

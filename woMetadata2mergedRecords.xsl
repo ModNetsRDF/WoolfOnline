@@ -37,223 +37,238 @@
                     //table[generate-id(.) = generate-id(key('distinctTable',
                     column[@name = 'content_description'])[1])]">
 
+                <xsl:variable name="content_title" select="column[@name = 'content_title']"/>
                 <xsl:variable name="content_description"
                     select="column[@name = 'content_description']"/>
-                
-                <xsl:if test="column[@name='url'] != ''">
-                <table>
+                <xsl:variable name="taxa" select="column[@name = 'taxa']"/>
 
-                    <!-- add 'content_description' column using variable set 
+
+                <!-- Discard records that do not have a URL, since these cannot be indexed. -->
+                <xsl:if test="column[@name = 'url'] != ''">
+                    <table>
+
+                        <!-- add 'content_description' column using variable set 
                       within for-each loop -->
 
-                    <column name="content_description">
-                        <xsl:value-of select="$content_description"/>
-                    </column>
+                        <column name="content_description">
+                            <xsl:value-of select="$content_description"/>, <xsl:value-of
+                                select="$taxa"/>
+                        </column>
 
-                    <!-- Multiple values only retained in columns where these 
+                        <!-- Multiple values only retained in columns where these 
                         are needed for further processing. Mutliple values 
                         separated by ", " except for "content_id", which 
                         uses "+".  -->
 
-                    <column name="meta_id">
-                        <xsl:for-each select="key('distinctTable', $content_description)">
-                            <xsl:if test="position() != 1">, </xsl:if>
-                            <xsl:value-of select="column[@name = 'meta_id']"/>
-                        </xsl:for-each>
-                    </column>
-                    <column name="meta_subject">
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <xsl:if test="position() = 1">
-                                <xsl:value-of select="column[@name = 'meta_subject']"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                    </column>
-                    <column name="meta_source">
-                        <xsl:for-each select="key('distinctTable', $content_description)">
-                            <xsl:if test="position() = 1">
-                                <xsl:value-of select="column[@name = 'meta_source']"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                    </column>
-                    <column name="meta_coverage">
-                        <xsl:for-each select="key('distinctTable', $content_description)">
-                            <xsl:if test="position() = 1">
-                                <xsl:value-of select="column[@name = 'meta_coverage']"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                    </column>
-                    <column name="meta_creator">
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <xsl:if test="position() = 1">
-                                <xsl:value-of select="column[@name = 'meta_creator']"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                    </column>
-                    <column name="meta_publisher">
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <xsl:if test="position() = 1">
-                                <xsl:value-of select="column[@name = 'meta_publisher']"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                    </column>
-                    <column name="meta_contributor">
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <xsl:if test="position() = 1">
-                                <xsl:value-of select="column[@name = 'meta_contributor']"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                    </column>
-                    <column name="meta_rights_holder">
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <xsl:if test="position() = 1">
-                                <xsl:value-of select="column[@name = 'meta_rights_holder']"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                    </column>
-                    <column name="meta_date">
-                        <xsl:for-each
-                            select="key('distinctTable', $content_description)">
-                            <xsl:if test="position() = 1">
-                                <xsl:value-of select="column[@name = 'meta_date']"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                    </column>
-                    <column name="meta_format">
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <xsl:if test="position() != 1">, </xsl:if>
-                            <xsl:value-of select="column[@name = 'meta_format']"/>
-                        </xsl:for-each>
-                    </column>
-                    <column name="meta_provenance">
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <xsl:if test="position() = 1">
-                                <xsl:value-of select="column[@name = 'meta_provenance']"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                    </column>
-                    <column name="content_title">
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <xsl:if test="position() = 1">
-                                <xsl:value-of select="column[@name = 'content_title']"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                    </column>
+                        <column name="meta_id">
+                            <xsl:for-each select="key('distinctTable', $content_description)">
+                                <xsl:if test="position() != 1">, </xsl:if>
+                                <xsl:value-of select="column[@name = 'meta_id']"/>
+                            </xsl:for-each>
+                        </column>
+                        <column name="meta_subject">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() = 1">
+                                    <xsl:value-of select="column[@name = 'meta_subject']"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </column>
+                        <column name="meta_source">
+                            <xsl:for-each select="key('distinctTable', $content_description)">
+                                <xsl:if test="position() = 1">
+                                    <xsl:value-of select="column[@name = 'meta_source']"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </column>
+                        <column name="meta_coverage">
+                            <xsl:for-each select="key('distinctTable', $content_description)">
+                                <xsl:if test="position() = 1">
+                                    <xsl:value-of select="column[@name = 'meta_coverage']"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </column>
+                        <column name="meta_creator">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() = 1">
+                                    <xsl:value-of select="column[@name = 'meta_creator']"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </column>
+                        <column name="meta_publisher">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() = 1">
+                                    <xsl:value-of select="column[@name = 'meta_publisher']"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </column>
+                        <column name="meta_contributor">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() = 1">
+                                    <xsl:value-of select="column[@name = 'meta_contributor']"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </column>
+                        <column name="meta_rights_holder">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() = 1">
+                                    <xsl:value-of select="column[@name = 'meta_rights_holder']"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </column>
+                        <column name="meta_date">
+                            <xsl:for-each select="key('distinctTable', $content_description)">
+                                <xsl:if test="position() = 1">
+                                    <xsl:value-of select="column[@name = 'meta_date']"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </column>
+                        <column name="meta_format">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() != 1">, </xsl:if>
+                                <xsl:value-of select="column[@name = 'meta_format']"/>
+                            </xsl:for-each>
+                        </column>
+                        <column name="meta_provenance">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() = 1">
+                                    <xsl:value-of select="column[@name = 'meta_provenance']"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </column>
+                        <column name="content_title">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() = 1">
+                                    <xsl:value-of select="column[@name = 'content_title']"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </column>
 
-                    <!-- content_id values are included in generated @rdf:about 
+                        <!-- content_id values are included in generated @rdf:about 
                         values, so a "+" is used instead of ", " between them. -->
 
-                    <column name="content_id">
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <xsl:if test="position() != 1">+</xsl:if>
-                            <xsl:value-of select="column[@name = 'content_id']"/>
-                        </xsl:for-each>
-                    </column>
-                    <column name="taxa">
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <xsl:if test="position() = 1">
-                                <xsl:value-of select="column[@name = 'taxa']"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                    </column>
-                    <column name="taxa_id">
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <xsl:if test="position() = 1">
-                                <xsl:value-of select="column[@name = 'taxa_id']"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                    </column>
-                    <column name="taxa_subset">
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <xsl:if test="position() != 1">, </xsl:if>
-                            <xsl:value-of select="column[@name = 'taxa_subset']"/>
-                        </xsl:for-each>
-                    </column>
-                    <column name="taxa_root">
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <xsl:if test="position() != 1">, </xsl:if>
-                            <xsl:value-of select="column[@name = 'taxa_root']"/>
-                        </xsl:for-each>
-                    </column>
-                    <column name="taxa_parent_id">
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <xsl:if test="position() = 1">
-                                <xsl:value-of select="column[@name = 'taxa_parent_id']"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                    </column>
-                    <column name="project">
-                        <xsl:for-each
-                            select="
-                            key('distinctTable',
-                            $content_description)">
-                            <xsl:if test="position() = 1">
-                                <xsl:value-of select="column[@name = 'project']"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                    </column>
-                    <column name="project_id">
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <xsl:if test="position() = 1">
-                                <xsl:value-of select="column[@name = 'project_id']"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                    </column>
-                    <column name="url">
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <xsl:if test="position() = 1">
+                        <column name="content_id">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() != 1">+</xsl:if>
+                                <xsl:value-of select="column[@name = 'content_id']"/>
+                            </xsl:for-each>
+                        </column>
+                        <column name="taxa">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() = 1">
+                                    <xsl:value-of select="column[@name = 'taxa']"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </column>
+                        <column name="taxa_id">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() = 1">
+                                    <xsl:value-of select="column[@name = 'taxa_id']"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </column>
+                        <column name="taxa_subset">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() != 1">, </xsl:if>
+                                <xsl:value-of select="column[@name = 'taxa_subset']"/>
+                            </xsl:for-each>
+                        </column>
+                        <column name="taxa_root">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() != 1">, </xsl:if>
+                                <xsl:value-of select="column[@name = 'taxa_root']"/>
+                            </xsl:for-each>
+                        </column>
+                        <column name="taxa_parent_id">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() = 1">
+                                    <xsl:value-of select="column[@name = 'taxa_parent_id']"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </column>
+                        <column name="project">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() = 1">
+                                    <xsl:value-of select="column[@name = 'project']"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </column>
+                        <column name="project_id">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() = 1">
+                                    <xsl:value-of select="column[@name = 'project_id']"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </column>
+                        <column name="url">
+                            <xsl:for-each
+                                select="
+                                    key('distinctTable',
+                                    $content_description)">
+                                <xsl:if test="position() != 1">,</xsl:if>
                                 <xsl:value-of select="column[@name = 'url']"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                    </column>
-                </table>
+                            </xsl:for-each>
+                        </column>
+
+
+
+                        <!-- 
+                        <xsl:for-each
+                            select="
+                                key('distinctTable',
+                                $content_description)">
+                            <column name="url">
+                                <xsl:value-of select="column[@name = 'url']"/>
+                            </column>
+                        </xsl:for-each> -->
+                    </table>
                 </xsl:if>
             </xsl:for-each>
         </metadata_records_merged>
