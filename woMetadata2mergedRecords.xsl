@@ -5,12 +5,12 @@
     <!-- Stylesheet created by Nikolaus Wasmoen, 6/28/2015, for Woolf Online 
         to fix duplicate entry issue in the wometadata.xml file that was 
         generated from Woolf Onine's mojulem SQL database in fall 2014. 
-        This stylesheet merges records with identical content_descriptions. 
-        URL for each merged record is set to transcription page when 
-        available. If no transcription available, URL is set to gallery 
-        page. This stylesheet should be used in conjunction with 
-        wo2rdf.xsl to generate ModNets/COLLEX RDF for aggregation 
-        purposes. 
+        This stylesheet merges records with identical content_descriptions
+        using the wometadata.xml Mojulem metadata export file provided by
+        Nick Hayward in fall 2014. 
+        
+        This stylesheet should be used in conjunction with wo2rdf.xsl to 
+        generate ModNets/COLLEX RDF for aggregation purposes. 
         
         Files for Woolf Online ModNets aggregation archived at:
         https://github.com/ModNetsRDF/WoolfOnline
@@ -256,18 +256,6 @@
                                 <xsl:value-of select="column[@name = 'url']"/>
                             </xsl:for-each>
                         </column>
-
-
-
-                        <!-- 
-                        <xsl:for-each
-                            select="
-                                key('distinctTable',
-                                $content_description)">
-                            <column name="url">
-                                <xsl:value-of select="column[@name = 'url']"/>
-                            </column>
-                        </xsl:for-each> -->
                     </table>
                 </xsl:if>
             </xsl:for-each>
