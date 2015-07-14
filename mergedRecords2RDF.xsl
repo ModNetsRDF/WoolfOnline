@@ -57,8 +57,8 @@
 
     <xsl:variable name="Berg_Materials">Berg_Materials_Notes_For_Writing</xsl:variable>
     <xsl:variable name="Typescript_Of_Time_Passes">Typescript_Of_Time_Passes</xsl:variable>
-    <xsl:variable name="Le_Temps_Passe">woolfonline.com/Le_Temps_Passe</xsl:variable>
-    <xsl:variable name="Proofs_Complete_Set">woolfonline.com/Proofs_Complete_Set</xsl:variable>
+    <xsl:variable name="Le_Temps_Passe">Le_Temps_Passe</xsl:variable>
+    <xsl:variable name="Proofs_Complete_Set">Proofs_Complete_Set</xsl:variable>
     <xsl:variable name="Proofs_Second_Copy_Gatherings">Proofs_Second_Copy_Gatherings</xsl:variable>
     <xsl:variable name="USA_1st_Edition">USA_1st_Edition</xsl:variable>
     <xsl:variable name="GB_1st_Edition">GB_1st_Edition</xsl:variable>
@@ -379,37 +379,37 @@
 
                     <xsl:choose>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '6'">
-                            <dcterms:isPartOf rdf:resource="{$Berg_Materials}"/>
+                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Berg_Materials}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '17'">
-                            <dcterms:isPartOf rdf:resource="{$Typescript_Of_Time_Passes}"/>
+                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Typescript_Of_Time_Passes}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '60' and $taxa_id = '25'">
-                            <dcterms:isPartOf rdf:resource="{$Le_Temps_Passe}"/>
+                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Le_Temps_Passe}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '18'">
-                            <dcterms:isPartOf rdf:resource="{$Proofs_Complete_Set}"/>
+                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Proofs_Complete_Set}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '18' and $taxa_id = '27'">
-                            <dcterms:isPartOf rdf:resource="{$Proofs_Second_Copy_Gatherings}"/>
+                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Proofs_Second_Copy_Gatherings}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '19'">
-                            <dcterms:isPartOf rdf:resource="{$USA_1st_Edition}"/>
+                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$USA_1st_Edition}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '20'">
-                            <dcterms:isPartOf rdf:resource="{$GB_1st_Edition}"/>
+                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$GB_1st_Edition}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '21'">
-                            <dcterms:isPartOf rdf:resource="{$Uniform_Edition}"/>
+                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Uniform_Edition}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '22'">
-                            <dcterms:isPartOf rdf:resource="{$Everyman_Edition}"/>
+                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Everyman_Edition}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '23'">
-                            <dcterms:isPartOf rdf:resource="{$Albatross_Edition}"/>
+                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Albatross_Edition}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '57'">
-                            <dcterms:isPartOf rdf:resource="{$Sketch_of_the_Past}"/>
+                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Sketch_of_the_Past}"/>
                         </xsl:when>
                     </xsl:choose>
 
@@ -924,7 +924,7 @@
                                  We do this by tokenizing the list and checking each position in the list in order, then returning the 
                                  value of the first tokenized list item that includes the string "transcription". 
                                  
-                                 Based on the current woMetadata, it is only necessary to test through the 7th position in the list of URLs in the 
+                                 Based on the current woMetadata, it is only necessary to test through the 8th position, and also for the 16th position, in the list of URLs in the 
                                  mergedRecords file. -->
 
                             <xsl:when test="contains($url, ',')">
@@ -978,7 +978,23 @@
                                     </xsl:attribute>
                                 </xsl:if>
 
-                                <!-- If there are no transcription URLs in the first 7 positions of the list, we just return the first
+                                <xsl:variable name="eighth" select="$tokenizedURLS[position() = 8]"/>
+                                <xsl:if test="contains($eighth, 'transcriptions')">
+                                    <xsl:attribute name="rdf:resource">
+                                        <xsl:value-of select="$eighth"/>
+                                    </xsl:attribute>
+                                </xsl:if>
+
+                                <xsl:variable name="sixteenth"
+                                    select="$tokenizedURLS[position() = 16]"/>
+                                <xsl:if test="contains($sixteenth, 'transcriptions')">
+                                    <xsl:attribute name="rdf:resource">
+                                        <xsl:value-of select="$sixteenth"/>
+                                    </xsl:attribute>
+                                </xsl:if>
+
+
+                                <!-- If there are no transcription URLs in the first 8 positions or the 16th position of the list, we just return the first
                                      URL in the list, which will be the image URL of the first object in the merged record. -->
 
                                 <xsl:if test="not(contains($URLS, 'transcriptions'))">
