@@ -8,17 +8,19 @@
     xmlns:wo="http://www.woolfonline.com/schema#" exclude-result-prefixes="xs" version="2.0">
 
 
-    <!-- Stylesheet created by Nikolaus Wasmoen, 6/28/2015, for Woolf Online 
-         to be used in conjunction with woMetadata2mergedRecords.xsl to 
-         generate ModNets/COLLEX RDF for aggregation purposes. This stylesheet
-         generates ModNets/COLLEX RDF objects from the woMetadata_mergedRecords.xml 
-         file created using woMetadata2mergedRecords.xsl to transform the 
-         wometadata.xml Mojoulem metadata export file provided by Nick Hayward in
-         fall 2014. 
+    <!-- navigationLinks2mergedRecords.xsl stylesheet created by Nikolaus 
+        Wasmoen, 6/28/2015, for Woolf Online to transform the result of 
+        noDuplicates2mergedRecords.xsl. This stylesheet generates ModNets
+        RDF. 
         
-         Files for Woolf Online ModNets aggregation archived at:
-         https://github.com/ModNetsRDF/WoolfOnline
-         Contact: pm@modnets.org -->
+        Updated, Nikolaus Wasmoen, 7/24/2015.
+        
+        Should be merged with other WO RDF generation stylesheets in future.        
+        
+        Files for Woolf Online ModNets aggregation archived at:
+        https://github.com/ModNetsRDF/WoolfOnline
+        
+        Contact: pm@modnets.org -->
 
 
     <xsl:output method="xml" encoding="utf-8" indent="yes"/>
@@ -65,7 +67,8 @@
     <xsl:variable name="Uniform_Edition">Uniform_Edition</xsl:variable>
     <xsl:variable name="Everyman_Edition">Everyman_Edition</xsl:variable>
     <xsl:variable name="Albatross_Edition">Albatross_Edition</xsl:variable>
-    <xsl:variable name="Sketch_of_the_Past">Sketch_of_the_Past</xsl:variable>
+    <xsl:variable name="Sketch_of_the_Past_MS">Sketch_of_the_Past_Manuscript</xsl:variable>
+    <xsl:variable name="Sketch_of_the_Past_TS">Sketch_of_the_Past_Typescript</xsl:variable>
 
 
 
@@ -279,25 +282,45 @@
                 <role:CRE>Virginia Woolf</role:CRE>
                 <role:PBL>The Albatross</role:PBL>
             </wo:Description>
-            <wo:Description rdf:about="http://woolfonline.com/{$Sketch_of_the_Past}">
+            <wo:Description rdf:about="http://woolfonline.com/{$Sketch_of_the_Past_MS}">
                 <collex:federation>ModNets</collex:federation>
                 <collex:archive>woolf_ol</collex:archive>
                 <collex:discipline>Literature</collex:discipline>
                 <collex:freeculture>True</collex:freeculture>
-                <collex:genre>Fiction</collex:genre>
+                <collex:genre>Life Writing</collex:genre>
                 <collex:source_html
-                    rdf:resource="http://woolfonline.com/?node=content/image/gallery&amp;project=1&amp;parent=2&amp;taxa=57"/>
+                    rdf:resource="http://woolfonline.com/?node=content/image/gallery&amp;project=1&amp;parent=57&amp;taxa=58"/>
                 <rdfs:seeAlso
-                    rdf:resource="http://woolfonline.com/?node=content/image/gallery&amp;project=1&amp;parent=2&amp;taxa=57"/>
-                <dc:title>To The Lighthouse: A Sketch of the Past</dc:title>
+                    rdf:resource="http://woolfonline.com/?node=content/image/gallery&amp;project=1&amp;parent=57&amp;taxa=58"/>
+                <dc:title>A Sketch of the Past, Manuscript</dc:title>
                 <dc:type>Manuscript</dc:type>
                 <dc:type>Collection</dc:type>
                 <dc:date>1939</dc:date>
-                <dc:subject>fiction</dc:subject>
+                <dc:subject>memoir</dc:subject>
                 <role:AUT>Virginia Woolf</role:AUT>
                 <role:CRE>Virginia Woolf</role:CRE>
                 <role:RPS>University of Sussex Library</role:RPS>
             </wo:Description>
+            <wo:Description rdf:about="http://woolfonline.com/{$Sketch_of_the_Past_TS}">
+                <collex:federation>ModNets</collex:federation>
+                <collex:archive>woolf_ol</collex:archive>
+                <collex:discipline>Literature</collex:discipline>
+                <collex:freeculture>True</collex:freeculture>
+                <collex:genre>Life Writing</collex:genre>
+                <collex:source_html
+                    rdf:resource="http://woolfonline.com/?node=content/image/gallery&amp;project=1&amp;parent=57&amp;taxa=59"/>
+                <rdfs:seeAlso
+                    rdf:resource="http://woolfonline.com/?node=content/image/gallery&amp;project=1&amp;parent=57&amp;taxa=59"/>
+                <dc:title>A Sketch of the Past</dc:title>
+                <dc:type>Typescript</dc:type>
+                <dc:type>Collection</dc:type>
+                <dc:date>1939</dc:date>
+                <dc:subject>memoir</dc:subject>
+                <role:AUT>Virginia Woolf</role:AUT>
+                <role:CRE>Virginia Woolf</role:CRE>
+                <role:RPS>University of Sussex Library</role:RPS>
+            </wo:Description>
+
             <xsl:apply-templates/>
         </rdf:RDF>
     </xsl:template>
@@ -314,7 +337,7 @@
         that do not lack a value in the 'url' column of the wometadata_MERGED.xml file. -->
 
         <xsl:choose>
-            <xsl:when test="column[@name = 'url'] != ''">
+            <xsl:when test="column[@name = 'taxa_subset'] != ''">
 
                 <!-- Variables used to generate unique rdf:about values for each object; note that 
                 merged transcriptions+images will end in the format "1+2", where "1" is the original
@@ -330,6 +353,10 @@
                 <xsl:variable name="taxa_id">
                     <xsl:value-of select="column[@name = 'taxa_id']"/>
                 </xsl:variable>
+                <xsl:variable name="meta_source">
+                    <xsl:value-of select="column[@name = 'meta_source']"/>
+                </xsl:variable>
+
                 <xsl:variable name="content_id">
                     <xsl:value-of select="column[@name = 'content_id']"/>
                 </xsl:variable>
@@ -379,38 +406,55 @@
 
                     <xsl:choose>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '6'">
-                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Berg_Materials}"/>
+                            <dcterms:isPartOf
+                                rdf:resource="http://woolfonline.com/{$Berg_Materials}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '17'">
-                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Typescript_Of_Time_Passes}"/>
+                            <dcterms:isPartOf
+                                rdf:resource="http://woolfonline.com/{$Typescript_Of_Time_Passes}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '60' and $taxa_id = '25'">
-                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Le_Temps_Passe}"/>
+                            <dcterms:isPartOf
+                                rdf:resource="http://woolfonline.com/{$Le_Temps_Passe}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '18'">
-                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Proofs_Complete_Set}"/>
+                            <dcterms:isPartOf
+                                rdf:resource="http://woolfonline.com/{$Proofs_Complete_Set}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '18' and $taxa_id = '27'">
-                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Proofs_Second_Copy_Gatherings}"/>
+                            <dcterms:isPartOf
+                                rdf:resource="http://woolfonline.com/{$Proofs_Second_Copy_Gatherings}"
+                            />
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '19'">
-                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$USA_1st_Edition}"/>
+                            <dcterms:isPartOf
+                                rdf:resource="http://woolfonline.com/{$USA_1st_Edition}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '20'">
-                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$GB_1st_Edition}"/>
+                            <dcterms:isPartOf
+                                rdf:resource="http://woolfonline.com/{$GB_1st_Edition}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '21'">
-                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Uniform_Edition}"/>
+                            <dcterms:isPartOf
+                                rdf:resource="http://woolfonline.com/{$Uniform_Edition}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '22'">
-                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Everyman_Edition}"/>
+                            <dcterms:isPartOf
+                                rdf:resource="http://woolfonline.com/{$Everyman_Edition}"/>
                         </xsl:when>
                         <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '23'">
-                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Albatross_Edition}"/>
+                            <dcterms:isPartOf
+                                rdf:resource="http://woolfonline.com/{$Albatross_Edition}"/>
                         </xsl:when>
-                        <xsl:when test="$taxa_parent_id = '2' and $taxa_id = '57'">
-                            <dcterms:isPartOf rdf:resource="http://woolfonline.com/{$Sketch_of_the_Past}"/>
+                        <xsl:when test="$taxa_id = '57' and $meta_source = 'manuscript'">
+                            <dcterms:isPartOf
+                                rdf:resource="http://woolfonline.com/{$Sketch_of_the_Past_MS}"/>
                         </xsl:when>
+                        <xsl:when test="$taxa_id = '57' and $meta_source = 'typescript'">
+                            <dcterms:isPartOf
+                                rdf:resource="http://woolfonline.com/{$Sketch_of_the_Past_TS}"/>
+                        </xsl:when>
+
                     </xsl:choose>
 
 
@@ -421,73 +465,73 @@
 
                     <xsl:choose>
 
-                        <!-- Berg Materials (Notes For Writing, Notebook I-III): project_id "1" and taxa_parent_id "6" -->
+                        <!-- Berg Materials (Notes For Writing, Notebook I-III): taxa_parent_id "2" and taxa_id "6" -->
 
                         <xsl:when
-                            test="column[@name = 'project_id'] = '1' and column[@name = 'taxa_parent_id'] = '6'">
+                            test="column[@name = 'taxa_parent_id'] = '2' and column[@name = 'taxa_id'] = '6'">
                             <dc:type>Manuscript</dc:type>
                         </xsl:when>
 
-                        <!-- Typescript of Time Passes: project_id "1" taxa_id "17" -->
+                        <!-- Typescript of Time Passes: taxa_parent_id "2" taxa_id "17" -->
 
                         <xsl:when
-                            test="column[@name = 'project_id'] = '1' and column[@name = 'taxa_id'] = '17'">
+                            test="column[@name = 'taxa_parent_id'] = '2' and column[@name = 'taxa_id'] = '17'">
                             <dc:type>Typescript</dc:type>
                         </xsl:when>
 
-                        <!-- Le Temps Passe: project_id "1" taxa_parent_id "60" taxa_id "25" -->
+                        <!-- Le Temps Passe: taxa_parent_id "60" taxa_id "25" -->
 
                         <xsl:when
-                            test="column[@name = 'project_id'] = '1' and column[@name = 'taxa_parent_id'] = '60' and column[@name = 'taxa_id'] = '25'">
+                            test="column[@name = 'taxa_parent_id'] = '60' and column[@name = 'taxa_id'] = '25'">
                             <dc:type>Periodical</dc:type>
                         </xsl:when>
 
-                        <!-- Proofs Complete Set: project_id "1" taxa_parent_id "2" taxa_id "18" -->
+                        <!-- Proofs Complete Set: taxa_parent_id "2" taxa_id "18" -->
 
                         <xsl:when
-                            test="column[@name = 'project_id'] = '1' and column[@name = 'taxa_parent_id'] = '2' and column[@name = 'taxa_id'] = '18'">
+                            test="column[@name = 'taxa_parent_id'] = '2' and column[@name = 'taxa_id'] = '18'">
                             <dc:type>Codex</dc:type>
                         </xsl:when>
 
-                        <!-- Proofs - Second Copy Gatherings S-U: project_id "1" taxa_parent_id "18" taxa_id "27" -->
+                        <!-- Proofs - Second Copy Gatherings S-U: taxa_parent_id "18" taxa_id "27" -->
 
                         <xsl:when
-                            test="column[@name = 'project_id'] = '1' and column[@name = 'taxa_parent_id'] = '18' and column[@name = 'taxa_id'] = '27'">
+                            test="column[@name = 'taxa_parent_id'] = '18' and column[@name = 'taxa_id'] = '27'">
                             <dc:type>Codex</dc:type>
                         </xsl:when>
 
-                        <!-- USA 1st Edition: project_id "1" taxa_id "19" -->
+                        <!-- USA 1st Edition: taxa_parent_id "2" taxa_id "19" -->
 
                         <xsl:when
-                            test="column[@name = 'project_id'] = '1' and column[@name = 'taxa_id'] = '19'">
+                            test="column[@name = 'taxa_parent_id'] = '2' and column[@name = 'taxa_id'] = '19'">
                             <dc:type>Codex</dc:type>
                         </xsl:when>
 
-                        <!-- GB 1st Edition: project_id "1" taxa_id "20" -->
+                        <!-- GB 1st Edition: taxa_parent_id "2" taxa_id "20" -->
 
                         <xsl:when
-                            test="column[@name = 'project_id'] = '1' and column[@name = 'taxa_id'] = '20'">
+                            test="column[@name = 'taxa_parent_id'] = '2' and column[@name = 'taxa_id'] = '20'">
                             <dc:type>Codex</dc:type>
                         </xsl:when>
 
-                        <!-- Uniform Edition: project_id "1" taxa_id "21" -->
+                        <!-- Uniform Edition: taxa_parent_id "2" taxa_id "21" -->
 
                         <xsl:when
-                            test="column[@name = 'project_id'] = '1' and column[@name = 'taxa_id'] = '21'">
+                            test="column[@name = 'taxa_parent_id'] = '2' and column[@name = 'taxa_id'] = '21'">
                             <dc:type>Codex</dc:type>
                         </xsl:when>
 
-                        <!-- Everyman Edition: project_id "1" taxa_id "22" -->
+                        <!-- Everyman Edition: taxa_parent_id "2" taxa_id "22" -->
 
                         <xsl:when
-                            test="column[@name = 'project_id'] = '1' and column[@name = 'taxa_id'] = '22'">
+                            test="column[@name = 'taxa_parent_id'] = '2' and column[@name = 'taxa_id'] = '22'">
                             <dc:type>Codex</dc:type>
                         </xsl:when>
 
-                        <!-- Albatross Edition: project_id "1" taxa_id "23" -->
+                        <!-- Albatross Edition: taxa_parent_id "2" taxa_id "23" -->
 
                         <xsl:when
-                            test="column[@name = 'project_id'] = '1' and column[@name = 'taxa_id'] = '23'">
+                            test="column[@name = 'taxa_parent_id'] = '2' and column[@name = 'taxa_id'] = '23'">
                             <dc:type>Codex</dc:type>
                         </xsl:when>
 
@@ -496,7 +540,7 @@
                         <!-- Agreement between Hogarth Press and Albatross Presse taxa_id "6" content_id "5553"  -->
 
                         <xsl:when
-                            test="column[@name = 'content_id'] = '5553' and column[@name = 'taxa_id'] = '6'">
+                            test="column[@name = 'taxa_id'] = '6' and column[@name = 'content_id'] = '5553'">
                             <dc:type>Sheet</dc:type>
                         </xsl:when>
 
@@ -558,24 +602,23 @@
                             <dc:type>Periodical</dc:type>
                         </xsl:when>
 
-                        <!-- Sketch of the Past Holograph MS taxa_parent_id "57" taxa_id "58"  -->
+                        <!-- Sketch of the Past Holograph MS taxa_id "57" meta_source "manuscript"  -->
 
                         <xsl:when
-                            test="column[@name = 'taxa_parent_id'] = '57' and column[@name = 'taxa_id'] = '58'">
+                            test="column[@name = 'taxa_id'] = '57' and column[@name = 'meta_source'] = 'manuscript'">
                             <dc:type>Manuscript</dc:type>
                         </xsl:when>
 
-                        <!-- Sketch of the Past Typescript taxa_parent_id "57" taxa_id "59"  -->
+                        <!-- Sketch of the Past Holograph TS taxa_id "57" meta_source "typescript"  -->
 
                         <xsl:when
-                            test="column[@name = 'taxa_parent_id'] = '57' and column[@name = 'taxa_id'] = '59'">
+                            test="column[@name = 'taxa_id'] = '57' and column[@name = 'meta_source'] = 'typescript'">
                             <dc:type>Typescript</dc:type>
                         </xsl:when>
 
-                        <!-- Stephen Family Photo Album taxa_parent_id "39" taxa_id "40"  -->
+                        <!-- Photo Album meta_source "photo_album" -->
 
-                        <xsl:when
-                            test="column[@name = 'taxa_parent_id'] = '39' and column[@name = 'taxa_id'] = '40'">
+                        <xsl:when test="column[@name = 'meta_source'] = 'photo album'">
                             <dc:type>Still Image</dc:type>
                         </xsl:when>
 
@@ -904,111 +947,27 @@
 
                     <!-- rdfs:seeAlso is REQUIRED 
                         
-                        Merged records often contain multiple URLS from which we must select one to include in the output rdfs:seeAlso element.  
-                        We make these selections using a combination of xsl:choose and xsl:if tests based on whether or not the URL(s), as 
-                        strings, contain "transcriptions", which is in in every transcription URL. -->
+                        Merged records often contain multiple URLS from which we want to
+                        select the first in the sequence of merged records, so that a 
+                        user will be taken to the first page of the merged work/collection
+                        represented by the ModNets RDF object. The first 'url' value will
+                        be a transcription if one is available, based on previous sorting
+                        and processing, and will only be a galler url if no transcription
+                        is available. -->
 
                     <xsl:variable name="url" select="column[@name = 'url']"/>
+
                     <rdfs:seeAlso>
-                        <xsl:choose>
-
-                            <!-- When there is only 1 URL present, we just select that value, regardless of whether it is an image or transcription. -->
-
-                            <xsl:when test="not(contains($url, ','))">
-                                <xsl:value-of select="$url"/>
-                            </xsl:when>
-
-                            <!-- When there are multiple transcription URLs, we want to select the first URL in the series to contain the string
-                                 "transcriptions".
-                                 
-                                 We do this by tokenizing the list and checking each position in the list in order, then returning the 
-                                 value of the first tokenized list item that includes the string "transcription". 
-                                 
-                                 Based on the current woMetadata, it is only necessary to test through the 8th position, and also for the 16th position, in the list of URLs in the 
-                                 mergedRecords file. -->
-
-                            <xsl:when test="contains($url, ',')">
-
-                                <xsl:variable name="URLS" select="column[@name = 'url']"/>
-
-                                <xsl:variable name="tokenizedURLS" select="tokenize($URLS, ',')"/>
-
-                                <xsl:variable name="first" select="$tokenizedURLS[position() = 1]"/>
-                                <xsl:if test="contains($first, 'transcriptions')">
-                                    <xsl:attribute name="rdf:resource">
-                                        <xsl:value-of select="$first"/>
-                                    </xsl:attribute>
-                                </xsl:if>
-
-                                <xsl:variable name="second" select="$tokenizedURLS[position() = 2]"/>
-                                <xsl:if test="contains($second, 'transcriptions')">
-                                    <xsl:attribute name="rdf:resource">
-                                        <xsl:value-of select="$second"/>
-                                    </xsl:attribute>
-                                </xsl:if>
-
-                                <xsl:variable name="third" select="$tokenizedURLS[position() = 3]"/>
-                                <xsl:if test="contains($third, 'transcriptions')">
-                                    <xsl:attribute name="rdf:resource">
-                                        <xsl:value-of select="$third"/>
-                                    </xsl:attribute>
-                                </xsl:if>
-                                <xsl:variable name="fourth" select="$tokenizedURLS[position() = 4]"/>
-                                <xsl:if test="contains($fourth, 'transcriptions')">
-                                    <xsl:attribute name="rdf:resource">
-                                        <xsl:value-of select="$fourth"/>
-                                    </xsl:attribute>
-                                </xsl:if>
-                                <xsl:variable name="fifth" select="$tokenizedURLS[position() = 5]"/>
-                                <xsl:if test="contains($fifth, 'transcriptions')">
-                                    <xsl:attribute name="rdf:resource">
-                                        <xsl:value-of select="$fifth"/>
-                                    </xsl:attribute>
-                                </xsl:if>
-                                <xsl:variable name="sixth" select="$tokenizedURLS[position() = 6]"/>
-                                <xsl:if test="contains($sixth, 'transcriptions')">
-                                    <xsl:attribute name="rdf:resource">
-                                        <xsl:value-of select="$sixth"/>
-                                    </xsl:attribute>
-                                </xsl:if>
-                                <xsl:variable name="seventh" select="$tokenizedURLS[position() = 7]"/>
-                                <xsl:if test="contains($seventh, 'transcriptions')">
-                                    <xsl:attribute name="rdf:resource">
-                                        <xsl:value-of select="$seventh"/>
-                                    </xsl:attribute>
-                                </xsl:if>
-
-                                <xsl:variable name="eighth" select="$tokenizedURLS[position() = 8]"/>
-                                <xsl:if test="contains($eighth, 'transcriptions')">
-                                    <xsl:attribute name="rdf:resource">
-                                        <xsl:value-of select="$eighth"/>
-                                    </xsl:attribute>
-                                </xsl:if>
-
-                                <xsl:variable name="sixteenth"
-                                    select="$tokenizedURLS[position() = 16]"/>
-                                <xsl:if test="contains($sixteenth, 'transcriptions')">
-                                    <xsl:attribute name="rdf:resource">
-                                        <xsl:value-of select="$sixteenth"/>
-                                    </xsl:attribute>
-                                </xsl:if>
-
-
-                                <!-- If there are no transcription URLs in the first 8 positions or the 16th position of the list, we just return the first
-                                     URL in the list, which will be the image URL of the first object in the merged record. -->
-
-                                <xsl:if test="not(contains($URLS, 'transcriptions'))">
-                                    <xsl:attribute name="rdf:resource">
-                                        <xsl:value-of select="$tokenizedURLS[position() = 1]"/>
-                                    </xsl:attribute>
-                                </xsl:if>
-
-                            </xsl:when>
-                        </xsl:choose>
-
+                        
+                        <xsl:variable name="URLS" select="column[@name = 'url']"/>
+                        <xsl:variable name="tokenizedURLS" select="tokenize($URLS, ',')"/>
+                        <xsl:variable name="first" select="$tokenizedURLS[position() = 1]"/>
+                        
+                        <xsl:attribute name="rdf:resource">
+                            <xsl:value-of select="$first"/>
+                        </xsl:attribute>
                     </rdfs:seeAlso>
-
-
+                    
                 </wo:Description>
             </xsl:when>
         </xsl:choose>
